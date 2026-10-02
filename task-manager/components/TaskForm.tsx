@@ -1,42 +1,77 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-type TaskFormProps = {
-  onAddTask: (title: string) => void;
-};
+export default function TaskForm() {
+  const router = useRouter();
 
-export default function TaskForm({ onAddTask }: TaskFormProps) {
   const [title, setTitle] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(
+    event: React.FormEvent<HTMLFormElement>,
+  ) {
     event.preventDefault();
 
     const trimmedTitle = title.trim();
 
-    if (!trimmedTitle) {
+    if (!trimmedTitle || loading) {
       return;
     }
 
-    onAddTask(trimmedTitle);
-    setTitle("");
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/tasks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: trimmedTitle,
+        }),
+      });
+
+      if (!response.ok) {
+        console.error(
+          "Failed to create task",
+          await response.text(),
+        );
+
+        return;
+      }
+
+      setTitle("");
+
+      router.refresh();
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mb-6 flex gap-2">
+    <form
+      onSubmit={handleSubmit}
+      className="mb-6 flex gap-2"
+    >
       <input
         type="text"
         value={title}
-        onChange={(event) => setTitle(event.target.value)}
+        onChange={(event) =>
+          setTitle(event.target.value)
+        }
         placeholder="Enter a task..."
+        disabled={loading}
         className="flex-1 rounded border px-3 py-2"
       />
 
       <button
         type="submit"
-        className="rounded bg-black px-4 py-2 text-white"
+        disabled={loading}
+        className="rounded bg-black px-4 py-2 text-white disabled:opacity-50"
       >
-        Add
+        {loading ? "Adding..." : "Add"}
       </button>
     </form>
   );

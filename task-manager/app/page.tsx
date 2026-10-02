@@ -1,59 +1,33 @@
-"use client";
-
-import { useState } from "react";
 import TaskForm from "@/components/TaskForm";
 import TaskItem from "@/components/TaskItem";
-import type { Task } from "@/types/task";
+import { getTasks } from "@/lib/tasks";
 
-const initialTasks: Task[] = [
-  {
-    id: 1,
-    title: "Learn TypeScript",
-    completed: true,
-  },
-  {
-    id: 2,
-    title: "Learn React",
-    completed: false,
-  },
-  {
-    id: 3,
-    title: "Learn Next.js",
-    completed: false,
-  },
-];
-
-export default function Home() {
-  const [tasks, setTasks] = useState<Task[]>(initialTasks);
-
-  function handleAddTask(title: string) {
-    const newTask: Task = {
-      id: Date.now(),
-      title,
-      completed: false,
-    };
-
-    setTasks((previousTasks) => [
-      ...previousTasks,
-      newTask,
-    ]);
-  }
+export default async function Home() {
+  const tasks = await getTasks();
 
   return (
     <main className="min-h-screen p-8">
-      <h1 className="mb-6 text-3xl font-bold">
-        Task Manager
-      </h1>
+      <div className="mx-auto max-w-xl">
+        <h1 className="mb-6 text-3xl font-bold">
+          Task Manager
+        </h1>
 
-      <div className="max-w-md">
-        <TaskForm onAddTask={handleAddTask} />
+        <TaskForm />
 
-        {tasks.map((task) => (
-          <TaskItem
-            key={task.id}
-            task={task}
-          />
-        ))}
+        <div>
+          {tasks.length === 0 ? (
+            <p className="text-gray-500">
+              No tasks yet.
+            </p>
+          ) : (
+            tasks.map((task) => (
+              <TaskItem
+                key={task.id}
+                task={task}
+              />
+            ))
+          )}
+        </div>
       </div>
     </main>
   );
