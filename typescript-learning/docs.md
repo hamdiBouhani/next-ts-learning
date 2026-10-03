@@ -2099,5 +2099,3 @@ TypeScript
                       │
                       └── HTTP integration tests
 ```
-
-**Next, we'll introduce the Service + Repository pattern and Prisma**, where your Go experience with repositories, PostgreSQL, and database-backed services will map very naturally onto TypeScript.
