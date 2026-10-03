@@ -37,3 +37,31 @@ Invoke-RestMethod `
 
 ---
 Verify in Prisma Studio : http://localhost:51212
+---
+                     /expenses
+                         │
+                         ▼
+                  ExpensesPage
+                  Server Component
+                    /        \
+                   /          \
+                  ▼            ▼
+          ExpenseForm      ExpenseList
+          Client           Server
+             │                │
+             │                │
+             ▼                ▼
+          Browser          Service
+             │                │
+             │                ▼
+             │           Repository
+             │                │
+             │                ▼
+             │             Prisma
+             │                │
+             │                ▼
+             │           PostgreSQL
+             │
+             └── POST /api/expenses
+
+---
