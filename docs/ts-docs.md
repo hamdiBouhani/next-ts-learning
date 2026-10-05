@@ -1,10 +1,4 @@
-Exactly. Let’s continue with **Lesson 2: Advanced TypeScript Types**.
-
-Since you already know Go well, I’ll explain the TypeScript concepts by comparing them to **Go interfaces, generics, maps, and error handling**.
-
-## Lesson 2 — Types That Matter in Real Projects
-
-We’ll cover:
+## Typescript docs
 
 1. `interface`
 2. `type` vs `interface`

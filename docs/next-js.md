@@ -1,6 +1,3 @@
-Yes. I’d turn that list into a **mini Next.js + TypeScript reference/tutorial**, using your **Expense Tracker** as the running example.
-
-Below is the order I recommend.
 
 ---
 
@@ -1176,7 +1173,3 @@ Focus on this:
                     │
               GET / POST / DELETE
 ```
-
-Once this mental model is clear, **Next.js becomes much easier**, especially with your Go backend background.
-
-For your current project, the next practical lesson should be **`ExpenseList` as a Server Component → Prisma → PostgreSQL**, and then we'll compare it directly with `ExpenseForm` as a Client Component.
